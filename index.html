@@ -64,60 +64,74 @@
     <header id="header">
       <div class="container">
         <h1><a href="index.html">Aya Squalli</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
         <h2>
           I'm a passionate
           <span></span><span class="cursor">|</span> from Morocco
           <script>
             document.addEventListener("DOMContentLoaded", function () {
-              const text = " Computer Science Student ";
-              const speed = 100; // typing speed in milliseconds
+              // 1. Define the array of roles you want to rotate through
+              const roles = [
+                "Computer Science Student",
+                "CTF Player",
+                "Security Researcher"
+              ];
+              
+              let roleIndex = 0; // Tracks which role is currently active
+              let currentText = "";
               let index = 0;
               let isDeleting = false;
               let delta = 150 - Math.random() * 100;
-              const cursor = document.querySelector(".cursor"); // Select the cursor element
+              
+              const textElement = document.querySelector("h2 span:first-of-type");
+              const cursor = document.querySelector(".cursor");
 
               function typeWriter() {
-                const fullText = text.substring(0, index + 1);
-                document.querySelector(
-                  "h2 span"
-                ).innerHTML = `<span class="wrap">${fullText}</span>`;
-
-                if (!isDeleting && index < text.length) {
-                  index++;
-                  delta = 150 - Math.random() * 100;
-                } else if (isDeleting && index > 0) {
+                // 2. Fetch the current role based on roleIndex
+                const fullText = roles[roleIndex];
+                
+                // 3. Handle the typing and deleting logic cleanly
+                if (isDeleting) {
+                  currentText = fullText.substring(0, index - 1);
                   index--;
-                  delta = 50;
+                  delta = 50; // Deleting speed
+                } else {
+                  currentText = fullText.substring(0, index + 1);
+                  index++;
+                  delta = 150 - Math.random() * 100; // Variable typing speed
                 }
 
-                if (index === text.length) {
-                  cursor.style.visibility = "visible"; // Show cursor
+                // Update the HTML
+                textElement.innerHTML = `<span class="wrap">${currentText}</span>`;
+
+                // 4. Determine when to pause, delete, or move to the next word
+                if (!isDeleting && index === fullText.length) {
+                  // Finished typing the word: pause before deleting
                   setTimeout(() => {
-                    isDeleting = true; // Start deleting after a delay
-                  }, 1000); // Delay of 1 second before starting to delete
+                    isDeleting = true;
+                    typeWriter();
+                  }, 1500); // 1.5 second pause at the end of the word
+                  return; 
+                  
                 } else if (isDeleting && index === 0) {
-                  // Reset when fully deleted
-                  cursor.style.visibility = "visible"; // Hide cursor
+                  // Finished deleting the word: move to next word
+                  isDeleting = false;
+                  roleIndex = (roleIndex + 1) % roles.length; // Loop back to 0 if at the end of the array
+                  
                   setTimeout(() => {
-                    isDeleting = false; // Start typing again after a delay
-                    index = 0; // Reset index to 0 to include the first letter
-                  }, 1000); // Delay of 1 second after deletion
+                    typeWriter();
+                  }, 500); // 0.5 second pause before typing the next word
+                  return;
                 }
 
-                // Toggle cursor visibility
-                cursor.style.visibility =
-                  isDeleting && index === 0 ? "hidden" : "visible";
-
-                setTimeout(typeWriter, isDeleting ? 50 : delta);
+                // Call typeWriter again after 'delta' milliseconds
+                setTimeout(typeWriter, delta);
               }
 
+              // Start the loop
               typeWriter();
             });
           </script>
         </h2>
-
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link active" href="#header">Home</a></li>
@@ -144,6 +158,36 @@
             class="linkedin"
             ><i class="bi bi-linkedin"></i
           ></a>
+          <a
+          href="https://ctftime.org/user/248425"
+          class="CTFTime"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="CTFtime profile"
+        >
+          <img
+            src="https://ctftime.org/static/img/s/32x32.png"
+            alt="CTFtime"
+            width="20"
+            height="20"
+            style="filter: brightness(0) invert(1);"
+          />
+        </a>
+      
+      <a
+        href="https://profile.hackthebox.com/profile/019c9714-9002-7064-95eb-c055a8ff745c"
+        class="HTBProfile"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Hack The Box profile"
+      >
+        <img
+          src="https://cdn.simpleicons.org/hackthebox/ffffff"
+          alt="Hack The Box"
+          width="24"
+          height="24"
+        />
+      </a>
         </div>
       </div>
     </header>
@@ -170,8 +214,8 @@
               I'm looking to collaborate on projects that push boundaries — and I genuinely enjoy the craft of it all.
             </p>
             <div class="d-flex flex-wrap gap-2">
-              <span style="font-size:12px;padding:3px 12px;border-radius:99px;background:#1c2a3a;color:#58a6ff;font-weight:500;">CTF competitor</span>
-              <span style="font-size:12px;padding:3px 12px;border-radius:99px;background:#1c2a3a;color:#58a6ff;font-weight:500;">Security researcher</span>
+              <span style="font-size:12px;padding:3px 12px;border-radius:99px;background:#1c2a3a;color:#58a6ff;font-weight:600;">CTF competitor</span>
+              <span style="font-size:12px;padding:3px 12px;border-radius:99px;background:#1c2a3a;color:#58a6ff;font-weight:600;">Security researcher</span>
               <span style="font-size:12px;padding:3px 12px;border-radius:99px;border:1px solid #6c757d;color:#8b949e;">Full-stack dev</span>
               <span style="font-size:12px;padding:3px 12px;border-radius:99px;border:1px solid #6c757d;color:#8b949e;">AI / ML</span>
               <span style="font-size:12px;padding:3px 12px;border-radius:99px;border:1px solid #6c757d;color:#8b949e;">Open to collaborate</span>
@@ -182,59 +226,59 @@
         <!-- Detail cards -->
         <div class="row g-3 mb-5">
           <div class="col-6 col-md-3">
-            <div style="background:rgba(255, 255, 255, 0.12);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
+            <div style="background:rgba(255, 255, 255, 0.01);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
               <div style="font-size:12px;color:#8b949e;margin-bottom:3px;"><i class="bi bi-geo-alt" style="margin-right:4px;"></i>Location</div>
-              <div style="font-size:14px;font-weight:500;color:#6c757d;">Fes, Morocco</div>
+              <div style="font-size:14px;font-weight:600;color:#6c757d;">Fes, Morocco</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="background:rgba(255, 255, 255, 0.12);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
+            <div style="background:rgba(255, 255, 255, 0.01);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
               <div style="font-size:12px;color:#8b949e;margin-bottom:3px;"><i class="bi bi-mortarboard" style="margin-right:4px;"></i>Degree</div>
-              <div style="font-size:14px;font-weight:500;color:#6c757d;">State Engineering · Exp. 2029</div>
+              <div style="font-size:14px;font-weight:600;color:#6c757d;">State Engineering · Exp. 2029</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="background:rgba(255, 255, 255, 0.12);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
+            <div style="background:rgba(255, 255, 255, 0.01);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
               <div style="font-size:12px;color:#8b949e;margin-bottom:3px;"><i class="bi bi-envelope" style="margin-right:4px;"></i>Email</div>
-              <div style="font-size:13px;font-weight:500;color:#6c757d;">Aya.HOUSSAINI@um6p.ma</div>
+              <div style="font-size:13px;font-weight:600;color:#6c757d;">Aya.HOUSSAINI@um6p.ma</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="background:rgba(255, 255, 255, 0.12);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
+            <div style="background:rgba(255, 255, 255, 0.01);border-radius:8px;padding:12px 14px;border:1px solid #6c757d;">
               <div style="font-size:12px;color:#8b949e;margin-bottom:3px;"><i class="bi bi-flag" style="margin-right:4px;"></i>CTF record</div>
-              <div style="font-size:14px;font-weight:500;color:#6c757d;">13 CTFs · 120+ flags</div>
+              <div style="font-size:14px;font-weight:600;color:#6c757d;">13 CTFs · 120+ flags</div>
             </div>
           </div>
         </div>
 
         <!-- Highlights -->
-        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#8b949e;font-weight:500;margin-bottom:12px;">Selected highlights</p>
+        <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#8b949e;font-weight:600;margin-bottom:12px;">Selected highlights</p>
         <div class="row g-3 mb-2">
           <div class="col-6 col-md-3">
-            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.12);">
-              <span style="display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;background:#FAC775;color:#633806;margin-bottom:8px;">1st nationally</span>
-              <div style="font-size:13px;font-weight:500;margin-bottom:3px;color:#6c757d;">MCSCv13 Finals</div>
+            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.01);">
+              <span style="display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#FAC775;color:#633806;margin-bottom:8px;">1st nationally</span>
+              <div style="font-size:13px;font-weight:600;margin-bottom:3px;color:#6c757d;">MCSCv13 Finals</div>
               <div style="font-size:12px;color:#8b949e;line-height:1.5;">Morocco's premier student cybersecurity championship</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.12);">
-              <span style="display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;background:#C0DD97;color:#27500A;margin-bottom:8px;">34th / 476 globally</span>
-              <div style="font-size:13px;font-weight:500;margin-bottom:3px;color:#6c757d;">ASIS CTF Finals 2025</div>
+            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.01);">
+              <span style="display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#C0DD97;color:#27500A;margin-bottom:8px;">34th / 476 globally</span>
+              <div style="font-size:13px;font-weight:600;margin-bottom:3px;color:#6c757d;">ASIS CTF Finals 2025</div>
               <div style="font-size:12px;color:#8b949e;line-height:1.5;">1st in Morocco · 2nd in MENA region</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.12);">
-              <span style="display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;background:#B5D4F4;color:#0C447C;margin-bottom:8px;">24th / 1550</span>
-              <div style="font-size:13px;font-weight:500;margin-bottom:3px;color:#6c757d;">UofTCTF 2026</div>
+            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.01);">
+              <span style="display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#B5D4F4;color:#0C447C;margin-bottom:8px;">24th / 1550</span>
+              <div style="font-size:13px;font-weight:600;margin-bottom:3px;color:#6c757d;">UofTCTF 2026</div>
               <div style="font-size:12px;color:#8b949e;line-height:1.5;">Top 2% globally, Open Division</div>
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.12);">
-              <span style="display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;background:#CECBF6;color:#3C3489;margin-bottom:8px;">Qualified</span>
-              <div style="font-size:13px;font-weight:500;margin-bottom:3px;color:#6c757d;">HackDay & Midnight CTF 2026</div>
+            <div style="border:1px solid #6c757d;border-radius:12px;padding:14px 16px;background:rgba(255, 255, 255, 0.01);">
+              <span style="display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#CECBF6;color:#3C3489;margin-bottom:8px;">Qualified</span>
+              <div style="font-size:13px;font-weight:600;margin-bottom:3px;color:#6c757d;">HackDay & Midnight CTF 2026</div>
               <div style="font-size:12px;color:#8b949e;line-height:1.5;">Two high-prestige 2026 qualification milestones</div>
             </div>
           </div>
@@ -250,41 +294,41 @@
         <div class="row g-3">
           <!-- Languages -->
           <div class="col-12 col-md-4">
-            <div style="background:rgba(255, 255, 255, 0.12);border:1px solid #6c757d;border-radius:12px;padding:16px 18px;height:100%;">
-              <h4 style="font-size:13px;font-weight:500;color:#8b949e;margin-bottom:12px;">Languages</h4>
+            <div style="background:rgba(255, 255, 255, 0.01);border:1px solid #6c757d;border-radius:12px;padding:16px 18px;height:100%;">
+              <h4 style="font-size:13px;font-weight:600;color:#8b949e;margin-bottom:12px;">Languages</h4>
               <div class="d-flex flex-wrap gap-2">
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxl-python" style="color:#3776ab;margin-right:4px;"></i>Python</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxl-c-plus-plus" style="color:#00599c;margin-right:4px;"></i>C / C++</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxl-javascript" style="color:#f7df1e;margin-right:4px;"></i>JavaScript</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxl-html5" style="color:#e34c26;margin-right:4px;"></i>HTML / CSS</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxs-data" style="color:#4479a1;margin-right:4px;"></i>SQL</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxl-python" style="color:#3776ab;margin-right:4px;"></i>Python</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxl-c-plus-plus" style="color:#00599c;margin-right:4px;"></i>C / C++</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxl-javascript" style="color:#f7df1e;margin-right:4px;"></i>JavaScript</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxl-html5" style="color:#e34c26;margin-right:4px;"></i>HTML / CSS</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxs-data" style="color:#4479a1;margin-right:4px;"></i>SQL</span>
               </div>
             </div>
           </div>
           <!-- Frameworks -->
           <div class="col-12 col-md-4">
-            <div style="background:rgba(255, 255, 255, 0.12);border:1px solid #6c757d;border-radius:12px;padding:16px 18px;height:100%;">
-              <h4 style="font-size:13px;font-weight:500;color:#8b949e;margin-bottom:12px;">Frameworks & libraries</h4>
+            <div style="background:rgba(255, 255, 255, 0.01);border:1px solid #6c757d;border-radius:12px;padding:16px 18px;height:100%;">
+              <h4 style="font-size:13px;font-weight:600;color:#8b949e;margin-bottom:12px;">Frameworks & libraries</h4>
               <div class="d-flex flex-wrap gap-2">
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxl-react" style="color:#61dafb;margin-right:4px;"></i>React / Next.js</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxl-vuejs" style="color:#42b883;margin-right:4px;"></i>Vue.js</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="bx bxl-flask" style="margin-right:4px;"></i>Flask</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;">Jinja2</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxl-react" style="color:#61dafb;margin-right:4px;"></i>React / Next.js</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxl-vuejs" style="color:#42b883;margin-right:4px;"></i>Vue.js</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="bx bxl-flask" style="margin-right:4px;"></i>Flask</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;">Jinja2</span>
               </div>
             </div>
           </div>
           <!-- Security -->
           <div class="col-12 col-md-4">
-            <div style="background:rgba(255, 255, 255, 0.12);border:1px solid #6c757d;border-radius:12px;padding:16px 18px;height:100%;">
-              <h4 style="font-size:13px;font-weight:500;color:#8b949e;margin-bottom:12px;">Security & tooling</h4>
+            <div style="background:rgba(255, 255, 255, 0.01);border:1px solid #6c757d;border-radius:12px;padding:16px 18px;height:100%;">
+              <h4 style="font-size:13px;font-weight:600;color:#8b949e;margin-bottom:12px;">Security & tooling</h4>
               <div class="d-flex flex-wrap gap-2">
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="ri-bug-line" style="color:#e80368;margin-right:4px;"></i>Burp Suite</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="ri-terminal-box-line" style="margin-right:4px;"></i>Kali Linux</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="ri-wifi-line" style="color:#47aeff;margin-right:4px;"></i>Wireshark</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="ri-search-eye-line" style="color:#ffbb2c;margin-right:4px;"></i>Nmap</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="ri-fire-line" style="color:#e80368;margin-right:4px;"></i>Metasploit</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="ri-list-check-2" style="color:#e361ff;margin-right:4px;"></i>OWASP Top 10</span>
-                <span style="font-size:12px;padding:4px 10px;border-radius:99px;background:#474747;border:1px solid #6c757d;color:#6c757d;"><i class="ri-shield-user-line" style="color:#5578ff;margin-right:4px;"></i>Vuln. Assessment</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-bug-line" style="color:#e80368;margin-right:4px;"></i>Burp Suite</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-terminal-box-line" style="margin-right:4px;"></i>Kali Linux</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-wifi-line" style="color:#47aeff;margin-right:4px;"></i>Wireshark</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-search-eye-line" style="color:#ffbb2c;margin-right:4px;"></i>Nmap</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-fire-line" style="color:#e80368;margin-right:4px;"></i>Metasploit</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-list-check-2" style="color:#e361ff;margin-right:4px;"></i>OWASP Top 10</span>
+                <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-shield-user-line" style="color:#5578ff;margin-right:4px;"></i>Vuln. Assessment</span>
               </div>
             </div>
           </div>
@@ -304,8 +348,6 @@
           <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-calendar-todo-line" style="color:#e80368;font-size:15px;"></i>Data Analysis</span>
           <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-paint-brush-line" style="color:#e361ff;font-size:15px;"></i>Photography</span>
           <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-file-list-3-line" style="color:#11dbcf;font-size:15px;"></i>Writing</span>
-          <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-restaurant-2-line" style="color:#47aeff;font-size:15px;"></i>Cooking</span>
-          <span style="font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #474747;color:#6c757d;display:inline-flex;align-items:center;gap:6px;"><i class="ri-price-tag-2-line" style="color:#4233ff;font-size:15px;"></i>Cats &amp; cars</span>
         </div>
       </div>
       <!-- End Interests -->
